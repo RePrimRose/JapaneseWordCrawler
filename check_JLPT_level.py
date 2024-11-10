@@ -50,7 +50,7 @@ def main():
     # Chrome 드라이버에 옵션 추가 및 드라이버 실행
     driver = webdriver.Chrome(options=chrome_options)
 
-    df = pd.read_csv('modified_vocab_data.csv')
+    df = pd.read_csv('./data/modified_vocab_data.csv')
     
     total_rows = df.shape[0]
     
@@ -90,7 +90,7 @@ def main():
     
     driver.quit()
     
-    df.to_csv('completed_vocab_data.csv', index=False, encoding='utf-8-sig')
+    df.to_csv('./data/completed_vocab_data.csv', index=False, encoding='utf-8-sig')
     print("파일이 'completed_vocab_data.csv'로 저장되었습니다.")
 
 if __name__ == "__main__":
