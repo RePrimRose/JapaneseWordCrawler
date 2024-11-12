@@ -146,6 +146,10 @@ def main():
             [example_sentence, translate_sentence, json_original_phrases, json_ruby_phrases, json_ruby_sentence])
 
         print(example_sentence, translate_sentence, json_original_phrases)
+        
+        if index % 100 == 0:
+            driver.quit()
+            driver = webdriver.Chrome(options=get_options())
 
     driver.quit()
 
