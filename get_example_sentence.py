@@ -54,7 +54,7 @@ def get_furigana_from_kuroshiro(text):
 
 
 def split_into_phrases(sentence):
-    josa_pattern = re.compile(r'(を|が|は|も|に|と|から|まで|よ|ね|か|。|、)')
+    josa_pattern = re.compile(r'(を|が|は|も|に|と|から|まで|よ|ね|か|、)')
     phrases = []
     phrase = ""
 
