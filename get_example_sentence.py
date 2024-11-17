@@ -105,7 +105,7 @@ def save_csv(data):
         writer = csv.writer(file)
 
         writer.writerow(
-            ["sentence", "translate", "divided_sentence", "sentence_with_ruby", "divided_sentence_with_ruby"])
+            ["sentence", "translate", "divided_sentence", "sentence_with_ruby", "divided_sentence_with_ruby", "level"])
 
         for row in data:
             writer.writerow(row)
@@ -143,7 +143,7 @@ def main():
         json_ruby_sentence = json.dumps(ruby_sentence, ensure_ascii=False)
 
         datas.append(
-            [example_sentence, translate_sentence, json_original_phrases, json_ruby_phrases, json_ruby_sentence])
+            [example_sentence, translate_sentence, json_original_phrases, json_ruby_phrases, json_ruby_sentence, row['Level']])
 
         print(example_sentence, translate_sentence, json_original_phrases)
         
