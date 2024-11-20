@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import pandas as pd
 import json
+import pyperclip
 import requests
 
 
@@ -44,9 +45,16 @@ class SentenceEditor:
         self.status_label = tk.Label(root, text="Status: 0/0", font=("Arial", 12))
         self.status_label.pack(anchor="w")
 
-        self.sentence_label = tk.Label(root, text="Sentence:", font=("Arial", 14))
-        self.sentence_label.pack(anchor="w")
-        self.sentence_text = self.create_scrollable_text(height=2)
+        sentence_frame = tk.Frame(self.root)
+        sentence_frame.pack(fill="x")
+        self.sentence_label = tk.Label(sentence_frame, text="Sentence:", font=("Arial", 14))
+        self.sentence_label.pack(side="left", anchor="w")
+
+        self.sentence_text = self.create_scrollable_text(parent=sentence_frame, height=2)
+        self.copy_sentence_button = tk.Button(
+            sentence_frame, text="Copy", command=self.copy_sentence_to_clipboard, font=("Arial", 10)
+        )
+        self.copy_sentence_button.pack(side="right", padx=5)
 
         self.translate_label = tk.Label(root, text="Translate:", font=("Arial", 14))
         self.translate_label.pack(anchor="w")
@@ -90,8 +98,11 @@ class SentenceEditor:
         self.ruby_button = tk.Button(root, text="Generate Ruby", command=self.generate_ruby)
         self.ruby_button.pack(side="left", padx=5)
 
-    def create_scrollable_text(self, height, state=tk.NORMAL):
-        frame = tk.Frame(self.root)
+    def create_scrollable_text(self, parent=None, height=4, state=tk.NORMAL):
+        if parent is None:
+            parent = self.root
+
+        frame = tk.Frame(parent)
         frame.pack(fill="x")
 
         scrollbar = tk.Scrollbar(frame)
@@ -102,6 +113,10 @@ class SentenceEditor:
         scrollbar.config(command=text.yview)
 
         return text
+
+    def copy_sentence_to_clipboard(self):
+        sentence = self.sentence_text.get(1.0, tk.END).strip()
+        pyperclip.copy(sentence)
 
     def load_csv(self):
         filepath = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
@@ -119,7 +134,7 @@ class SentenceEditor:
             filepath = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
             if filepath:
                 try:
-                    self.data.to_csv(filepath, index=False, encoding='utf-8-sig')
+                    self.data.to_csv(filepath, index=False)
                     messagebox.showinfo("Success", "File saved successfully!")
                 except Exception as e:
                     messagebox.showerror("Error", f"Failed to save file: {e}")
