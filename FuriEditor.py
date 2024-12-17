@@ -185,6 +185,10 @@ class SentenceEditor:
             # Save sentence_with_ruby
             sentence_with_ruby_text = self.sentence_with_ruby_text.get(1.0, tk.END).strip()
             self.data.loc[self.current_index, 'sentence_with_ruby'] = sentence_with_ruby_text
+            
+            # Save translate
+            translate_text = self.translate_text.get(1.0, tk.END).strip()
+            self.data.loc[self.current_index, 'translate'] = translate_text
 
     def generate_ruby(self):
         if self.data is not None:
