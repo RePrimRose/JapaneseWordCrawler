@@ -16,6 +16,7 @@ app.post('/getFurigana', async (req, res) => {
     const { text } = req.body;
     try {
         const result = await kuroshiro.convert(text, { to: "hiragana", mode: "furigana" });
+        console.log(result);
         res.send({ result });
     } catch (error) {
         console.error(error);
