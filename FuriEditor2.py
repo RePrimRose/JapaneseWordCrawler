@@ -55,9 +55,9 @@ def get_divided_sentence(sentence, client):
         response_format={"type": "json_object"},
         messages=[
             {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
-            {"role": "user", "content": "다음 일본어 문장을 언어 학습 퀴즈에 적합하도록 적절한 크기로 나누어 주세요. 각 단위는 단어 또는 의미 있는 개념으로 나누되, "
-                                        "조사나 마침표, 물음표, 느낌표는 붙이는 식으로 해주세요. 각 단위를 줄바꿈(엔터)으로 구분하여 출력해 주세요. 무조건 key값으론 "
-                                        "words라고 보내주세요."},
+            {"role": "user", "content": "다음 일본어 문장을 언어 학습 퀴즈에 적합하도록 적절한 크기로 나누어 주세요. 각 단위는 단어로 나누세요."
+                                        "너무 작은 단위로 나누지 말고 의미를 알아볼수있는 정도의 단위로 나누세요. 무조건 key값으론 "
+                                        "words라고 보내주세요. 주어진 문장 외에 다른 말을 추가하지 마세요."},
             {"role": "user", "content": sentence}
         ]
     )
@@ -71,7 +71,7 @@ def get_divided_sentence(sentence, client):
 
 def main():
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    df = pd.read_csv('./data/example_sentences.csv')
+    df = pd.read_csv('./data/temp.csv')
     total_rows = df.shape[0]
 
     for index, row in tqdm(df.iterrows(), total=total_rows, desc="진행 상황"):
@@ -84,7 +84,7 @@ def main():
 
         df.to_csv('temp2.csv', index=False)
 
-        time.sleep(2)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
